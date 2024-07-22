@@ -25,8 +25,10 @@ class Ship:
         self.moving_right = False
         self.moving_left = False
 
-    def update(self):
+    def update(self, ai_game):
         """ Update the ship's position based on the movement flag. """
+        self.screen_rect = ai_game.screen.get_rect()
+
         # Update the ship's x value, not the rect.
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed

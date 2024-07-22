@@ -16,6 +16,8 @@ class AlienInvasion:
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
+        # Initial view of screen is not flscr(false), in case of True it is flscr
+        self.fullscreen_mode = False
 
         # # Fullscreen mode
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -29,10 +31,10 @@ class AlienInvasion:
         self.bg_color = self.settings.bg_color
 
     def run_game(self):
-        """ Start the main loop for the game """
+        """ Start the main loop for the game` """
         while True:
             self._check_events()
-            self.ship.update()
+            self.ship.update(self)
             self._update_screen()
             # fps
             self.clock.tick(60)
@@ -56,6 +58,9 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_F11:
+            self.fullscreen_mode = True if self.fullscreen_mode == False else False
+            self._fullscreen_mode()
 
     def _check_keyup_events(self, event):
         """ Respond to keyreleases. """
@@ -63,6 +68,13 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _fullscreen_mode(self):
+        initial_screen = self.screen
+        if self.fullscreen_mode:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
     def _update_screen(self):
         """ Update images on the screen, and flip to the new screen. """
