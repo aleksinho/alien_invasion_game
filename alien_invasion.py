@@ -3,6 +3,7 @@ import pygame
 
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 
 class AlienInvasion:
@@ -22,6 +23,7 @@ class AlienInvasion:
         # self.settings.screen_height = self.screen.get_rect().height
 
         self.ship = Ship(self)
+        self.bullets = Bullet(self)
 
         # Set the background color.
         self.bg_color = self.settings.bg_color
@@ -31,6 +33,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
             # fps
             self.clock.tick(60)
