@@ -34,10 +34,18 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+
+            # Get rid of bullets that disappear
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+
             self._update_screen()
             # fps
             self.clock.tick(60)
-            print(self.clock.get_fps())
+
+            # show fps and bullet count
+            print(f"~~~fps: {self.clock.get_fps():.0f}~~~\n~~~the current amount of bullets: {len(self.bullets)}~~~\n\n")
 
     def _check_events(self):
         """ Responds to keypresses and mouse events. """
